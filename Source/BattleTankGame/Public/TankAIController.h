@@ -17,9 +17,13 @@ private:
 		
 	ATank* GetControlledTank();
 	ATank* GetPlayerTank() const;
+	ATank* PlayersTank = nullptr;
 	
 public:
 	
 	virtual void BeginPlay() override;
-	
+	virtual void Tick(float DeltaTime) override;
+
+	void AimAt()const;
+
 };

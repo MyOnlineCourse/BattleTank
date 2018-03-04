@@ -9,7 +9,7 @@ void ATankAIController::BeginPlay()
 	Super::BeginPlay();
 
 	ATank* PossessedTank = GetControlledTank();
-	ATank* PlayersTank = GetPlayerTank();
+	PlayersTank = GetPlayerTank();
 
 	if (PossessedTank){
 	
@@ -36,6 +36,27 @@ void ATankAIController::BeginPlay()
 
 		UE_LOG(LogTemp, Warning, TEXT("Could not find a tank to shoot at"));
 
+	}
+
+}
+
+void ATankAIController::Tick(float DeltaTime)
+{
+
+	Super::Tick(DeltaTime);
+
+	AimAt();
+
+}
+
+void ATankAIController::AimAt() const
+{
+
+	if (GetPlayerTank())
+	{
+		
+		UE_LOG(LogTemp, Warning, TEXT("AI tank %s aiming at %s."), *GetName(), *GetPlayerTank()->GetActorLocation().ToString());
+	
 	}
 
 }

@@ -37,5 +37,5 @@ private:
 	
 	UPROPERTY(EditAnywhere)
 	float Range = 1000000.0;
-
+	
 };
