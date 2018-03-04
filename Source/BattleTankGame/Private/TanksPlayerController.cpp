@@ -16,6 +16,28 @@ void ATanksPlayerController::AimAtCrosshair()
 
 	if (!GetControlledTank()) { return; }
 
+	else
+	{
+
+		FVector HitLocation;
+		
+		if (GetSightRayHitLocation(HitLocation))
+		{
+		}
+
+	}
+
+}
+
+bool ATanksPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) const
+{
+
+	//raycast out 
+	//if it hits something, modify needed to reflect the end location and return true
+	//otherwise break and return false
+
+	return false;
+
 }
 
 void ATanksPlayerController::BeginPlay()

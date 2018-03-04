@@ -20,6 +20,8 @@ public:
 	virtual void Tick(float) override;
 	virtual void BeginPlay() override;
 	
+	bool GetSightRayHitLocation(FVector&) const;
+
 	void AimAtCrosshair();
 
 };
