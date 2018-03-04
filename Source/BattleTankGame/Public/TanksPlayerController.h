@@ -26,10 +26,16 @@ public:
 
 private:
 
+	bool GetLookDirection(FVector2D, FVector&) const;
+	bool GetLookVectorHitLocation(FVector&, FVector) const;
+
 	UPROPERTY(EditAnywhere)
 	float CrosshairXLocation = .50;
 	
 	UPROPERTY(EditAnywhere)
 	float CrosshairYLocation = .50;
+	
+	UPROPERTY(EditAnywhere)
+	float Range = 1000000.0;
 
 };
