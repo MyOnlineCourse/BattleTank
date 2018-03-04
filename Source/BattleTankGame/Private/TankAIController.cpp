@@ -9,6 +9,7 @@ void ATankAIController::BeginPlay()
 	Super::BeginPlay();
 
 	ATank* PossessedTank = GetControlledTank();
+	ATank* PlayersTank = GetPlayerTank();
 
 	if (PossessedTank){
 	
@@ -23,11 +24,32 @@ void ATankAIController::BeginPlay()
 
 	}
 
+	if (PlayersTank)
+	{
+
+		UE_LOG(LogTemp, Warning, TEXT("Found a tank to shoot at: %s"), *PlayersTank->GetName());
+
+	}
+
+	else
+	{
+
+		UE_LOG(LogTemp, Warning, TEXT("Could not find a tank to shoot at"));
+
+	}
+
 }
 
 ATank* ATankAIController::GetControlledTank()
 {
 
 	return Cast<ATank>(GetPawn());
+
+}
+
+ATank* ATankAIController::GetPlayerTank() const
+{
+
+	return Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
 }
