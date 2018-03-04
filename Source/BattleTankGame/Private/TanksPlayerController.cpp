@@ -32,11 +32,18 @@ void ATanksPlayerController::AimAtCrosshair()
 bool ATanksPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) const
 {
 
+	int32 ViewportSizeX, ViewportSizeY;
+	GetViewportSize(ViewportSizeX, ViewportSizeY);
+
+	FVector2D ScreenLocation = FVector2D(ViewportSizeX * CrosshairXLocation, ViewportSizeY * CrosshairYLocation);
+
+	//UE_LOG(LogTemp, Warning, TEXT("Crosshair location: %s"), *ScreenLocation.ToString());
+
 	//raycast out 
 	//if it hits something, modify needed to reflect the end location and return true
 	//otherwise break and return false
 
-	return false;
+	return true;
 
 }
 

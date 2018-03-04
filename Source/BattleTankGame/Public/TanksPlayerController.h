@@ -24,4 +24,12 @@ public:
 
 	void AimAtCrosshair();
 
+private:
+
+	UPROPERTY(EditAnywhere)
+	float CrosshairXLocation = .50;
+	
+	UPROPERTY(EditAnywhere)
+	float CrosshairYLocation = .50;
+
 };
