@@ -38,6 +38,26 @@ void UTankAimingComponent::AimAt(FVector TargetLocation)
 {
 
 	FString OurTankName = GetOwner()->GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s aiming at location: %s"), *OurTankName, *TargetLocation.ToString());
 	
+	if (TankBarrel)
+	{
+
+		FVector BarrelLocation = TankBarrel->GetComponentLocation();	
+		UE_LOG(LogTemp, Warning, TEXT("%s aiming at location: %s from %s"), *OurTankName, *TargetLocation.ToString(), *BarrelLocation.ToString());
+
+	}
+
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("A barrel is missing"));
+
+	}
+
+}
+
+void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+{
+
+	TankBarrel = BarrelToSet;
+
 }

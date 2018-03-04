@@ -8,12 +8,12 @@ void ATankAIController::BeginPlay()
 
 	Super::BeginPlay();
 
-	ATank* PossessedTank = GetControlledTank();
+	PosessedTank = GetControlledTank();
 	PlayersTank = GetPlayerTank();
 
-	if (PossessedTank){
+	if (PosessedTank){
 	
-		UE_LOG(LogTemp, Warning, TEXT("AI tank: %s"), *PossessedTank->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("AI tank: %s"), *PosessedTank->GetName());
 	
 	}
 
@@ -54,9 +54,9 @@ void ATankAIController::AimAt() const
 
 	if (GetPlayerTank())
 	{
-		
-		UE_LOG(LogTemp, Warning, TEXT("AI tank %s aiming at %s."), *GetName(), *GetPlayerTank()->GetActorLocation().ToString());
-	
+
+		PosessedTank->AimAt(GetPlayerTank()->GetActorLocation());
+
 	}
 
 }

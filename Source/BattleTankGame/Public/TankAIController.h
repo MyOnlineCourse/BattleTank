@@ -18,6 +18,7 @@ private:
 	ATank* GetControlledTank();
 	ATank* GetPlayerTank() const;
 	ATank* PlayersTank = nullptr;
+	ATank* PosessedTank = nullptr;
 	
 public:
 	
