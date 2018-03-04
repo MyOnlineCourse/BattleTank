@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/Pawn.h"
+#include "TankAimingComponent.h"
 #include "Tank.generated.h"
 
 UCLASS()
@@ -24,5 +25,8 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 
 	void AimAt(FVector);
-	
+
+protected:
+	UTankAimingComponent* TankAimingComponent = nullptr;
+
 };
