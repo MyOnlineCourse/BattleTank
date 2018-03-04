@@ -3,6 +3,21 @@
 #include "BattleTankGame.h"
 #include "TanksPlayerController.h"
 
+void ATanksPlayerController::Tick(float DeltaTime)
+{
+
+	Super::Tick(DeltaTime);
+	AimAtCrosshair();
+
+}
+
+void ATanksPlayerController::AimAtCrosshair()
+{
+
+	if (!GetControlledTank()) { return; }
+
+}
+
 void ATanksPlayerController::BeginPlay()
 {
 
