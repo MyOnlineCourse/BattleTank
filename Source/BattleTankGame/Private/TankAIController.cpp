@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTankGame.h"
+#include "Tank.h"
 #include "TankAIController.h"
 
 void ATankAIController::BeginPlay()
@@ -55,7 +56,7 @@ void ATankAIController::AimAt() const
 	if (GetPlayerTank())
 	{
 
-		PosessedTank->AimAt(GetPlayerTank()->GetActorLocation());
+		PosessedTank->AimAt(GetPlayerTank()->GetActorLocation(), false);
 
 	}
 

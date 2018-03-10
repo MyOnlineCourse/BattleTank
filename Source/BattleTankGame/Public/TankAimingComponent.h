@@ -24,9 +24,9 @@ public:
 	// Called every frame
 	virtual void TickComponent( float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction ) override;
 
-	void AimAt(FVector, float);
+	void AimAt(FVector, float, bool);
 
-	void MoveBarrel(FVector);
+	void MoveBarrel(FVector, bool);
 	
 private:
 	

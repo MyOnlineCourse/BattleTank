@@ -35,7 +35,7 @@ void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, 
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed, bool IsPlayer)
 {
 
 	FString OurTankName = GetOwner()->GetName();
@@ -77,7 +77,7 @@ void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed)
 			auto TankName = GetOwner()->GetName();
 			UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *TankName, *AimDirection.ToString());
 			
-			MoveBarrel(TargetLocation);
+			MoveBarrel(TargetLocation, IsPlayer);
 
 		}
 
@@ -97,16 +97,29 @@ void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed)
 
 }
 
-void UTankAimingComponent::MoveBarrel(FVector AimDirection)
+void UTankAimingComponent::MoveBarrel(FVector AimDirection, bool IsPlayer)
 {
 
 	/*Rotate hatch for horizontal aiming, rotate barrel for vertical aiming*/
 
 	auto BarrelRotator = TankBarrel->GetForwardVector().Rotation();
+	BarrelRotator = FRotator((BarrelRotator.Pitch * -1), BarrelRotator.Yaw, BarrelRotator.Roll);
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
-	TankBarrel->Elevate(5.0);
+	FString myName = GetOwner()->GetName();
+
+	/* TODO: Remove debug block
+	if (IsPlayer)
+	{
+		
+		UE_LOG(LogTemp, Warning, TEXT("%s Aim direction: %s Barrel position: %s Aiming delta: %s"), *myName, *AimAsRotator.ToString(),
+		*BarrelRotator.ToString(), *DeltaRotator.ToString());
+
+	}
+	*/
+
+	TankBarrel->Elevate(DeltaRotator.Pitch);
 
 }
 
