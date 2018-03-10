@@ -34,7 +34,7 @@ void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, 
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector TargetLocation)
+void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed)
 {
 
 	FString OurTankName = GetOwner()->GetName();
@@ -43,7 +43,42 @@ void UTankAimingComponent::AimAt(FVector TargetLocation)
 	{
 
 		FVector BarrelLocation = TankBarrel->GetComponentLocation();	
-		UE_LOG(LogTemp, Warning, TEXT("%s aiming at location: %s from %s"), *OurTankName, *TargetLocation.ToString(), *BarrelLocation.ToString());
+
+		FVector OutLaunchVelocity;
+		FVector StartLocation = TankBarrel->GetSocketLocation(FName("Projectile"));
+
+		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
+
+		FCollisionResponseParams ResponseParams;
+
+		TArray <AActor *> ActorsToIgnore;
+
+		if (UGameplayStatics::SuggestProjectileVelocity(
+
+			this,
+			OutLaunchVelocity,
+			StartLocation,
+			TargetLocation,
+			LaunchSpeed,
+			false,
+			0.0,
+			0.0,
+			ESuggestProjVelocityTraceOption::DoNotTrace/*,
+			ResponseParams,
+			ActorsToIgnore,
+			true
+			*/
+			))
+
+		{
+
+			AimDirection = OutLaunchVelocity.GetSafeNormal();
+			auto TankName = GetOwner()->GetName();
+			//UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *TankName, *AimDirection.ToString());
+			
+			MoveBarrel(TargetLocation);
+
+		}
 
 	}
 
@@ -52,6 +87,19 @@ void UTankAimingComponent::AimAt(FVector TargetLocation)
 		UE_LOG(LogTemp, Warning, TEXT("A barrel is missing"));
 
 	}
+
+}
+
+void UTankAimingComponent::MoveBarrel(FVector AimDirection)
+{
+
+	/*Rotate hatch for horizontal aiming, rotate barrel for vertical aiming*/
+
+	auto BarrelRotator = TankBarrel->GetForwardVector().Rotation();
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotator = AimAsRotator - BarrelRotator;
+
+	UE_LOG(LogTemp, Warning, TEXT("Aim rotator: %s"), *AimAsRotator.ToString());
 
 }
 
