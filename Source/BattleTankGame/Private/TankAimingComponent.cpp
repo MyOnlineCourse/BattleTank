@@ -2,6 +2,7 @@
 
 #include "BattleTankGame.h"
 #include "TankBarrel.h"
+#include "TankTurret.h"
 #include "TankAimingComponent.h"
 
 
@@ -75,9 +76,21 @@ void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed, bool
 
 			AimDirection = OutLaunchVelocity.GetSafeNormal();
 			auto TankName = GetOwner()->GetName();
-			UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *TankName, *AimDirection.ToString());
+			//UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s"), *TankName, *AimDirection.ToString());
 			
-			MoveBarrel(TargetLocation, IsPlayer);
+			if (TankTurret)
+			{
+
+				MoveBarrel(TargetLocation, IsPlayer);
+
+			}
+
+			else
+			{
+
+				UE_LOG(LogTemp, Warning, TEXT("Problem- no turret found"));
+
+			}
 
 		}
 
@@ -103,23 +116,17 @@ void UTankAimingComponent::MoveBarrel(FVector AimDirection, bool IsPlayer)
 	/*Rotate hatch for horizontal aiming, rotate barrel for vertical aiming*/
 
 	auto BarrelRotator = TankBarrel->GetForwardVector().Rotation();
+	auto TurretRotator = TankTurret->GetForwardVector().Rotation();
+	TurretRotator = FRotator(BarrelRotator.Pitch, (BarrelRotator.Yaw - 0), BarrelRotator.Roll);
 	BarrelRotator = FRotator((BarrelRotator.Pitch * -1), BarrelRotator.Yaw, BarrelRotator.Roll);
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
+	auto DeltaRotator2 = AimAsRotator - TurretRotator;
 
 	FString myName = GetOwner()->GetName();
-
-	/* TODO: Remove debug block
-	if (IsPlayer)
-	{
-		
-		UE_LOG(LogTemp, Warning, TEXT("%s Aim direction: %s Barrel position: %s Aiming delta: %s"), *myName, *AimAsRotator.ToString(),
-		*BarrelRotator.ToString(), *DeltaRotator.ToString());
-
-	}
-	*/
-
+	
 	TankBarrel->Elevate(DeltaRotator.Pitch);
+	TankTurret->Rotate(DeltaRotator2.Yaw, TurretRotator, AimAsRotator);
 
 }
 
@@ -127,5 +134,12 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 
 	TankBarrel = BarrelToSet;
+
+}
+
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+{
+
+	TankTurret = TurretToSet;
 
 }
