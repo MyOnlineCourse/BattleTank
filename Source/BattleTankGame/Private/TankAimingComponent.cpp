@@ -121,7 +121,7 @@ void UTankAimingComponent::MoveBarrel(FVector AimDirection, bool IsPlayer)
 	BarrelRotator = FRotator((BarrelRotator.Pitch * -1), BarrelRotator.Yaw, BarrelRotator.Roll);
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
-	auto DeltaRotator2 = AimAsRotator - TurretRotator;
+	auto DeltaRotator2 = FRotator(AimAsRotator.Pitch, (AimAsRotator.Yaw - 180), AimAsRotator.Roll) - TurretRotator;
 
 	FString myName = GetOwner()->GetName();
 	
