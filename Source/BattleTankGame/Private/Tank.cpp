@@ -3,6 +3,7 @@
 #include "BattleTankGame.h"
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
+#include "Projectile.h"
 #include "TankTurret.h"
 #include "Tank.h"
 
@@ -50,6 +51,8 @@ void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
 
 	TankAimingComponent->SetBarrelReference(BarrelToSet);
 
+	Barrel = BarrelToSet;
+
 }
 
 void ATank::SetTurretReference(UTankTurret* TurretToSet)
@@ -63,5 +66,19 @@ void ATank::Fire()
 {
 
 	UE_LOG(LogTemp, Warning, TEXT("BOOM!"));
+
+	if (!Barrel) { return; }
+
+	else{  
+	
+		//spawn the projectile	
+		GetWorld()->SpawnActor<AProjectile>(
+			
+			ProjectileBluePrint,
+			Barrel->GetSocketLocation(FName("Projectile")),
+			Barrel->GetSocketRotation(FName("Projectile")),
+			FActorSpawnParameters());
+
+	}
 
 }
