@@ -16,7 +16,6 @@ class BATTLETANKGAME_API UTankBarrel : public UStaticMeshComponent
 public:
 
 	void Elevate(float);
-	void Rotate(float);
 
 private:
 
@@ -24,9 +23,9 @@ private:
 	float MaxDegreesPerSecond = 20;
 	
 	UPROPERTY(EditAnywhere, Category = Setup)
-	float LowestBarrelAngle = 3.15;
+	float LowestBarrelAngle = -3.15;
 
 	UPROPERTY(EditAnywhere, Category = Setup)
-	float HighestBarrelAngle = -30.0;
+	float HighestBarrelAngle = 30.0;
 	
 };
