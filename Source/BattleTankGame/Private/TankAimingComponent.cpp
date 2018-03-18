@@ -76,7 +76,6 @@ void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed, bool
 
 			AimDirection = OutLaunchVelocity.GetSafeNormal();
 			auto TankName = GetOwner()->GetName();
-			
 			/*
 			if (!IsPlayer) {
 
@@ -85,7 +84,7 @@ void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed, bool
 			}
 			*/
 
-			if (TankTurret)
+			if (TankTurret && TankBarrel)
 			{
 
 				MoveBarrel(TargetLocation, IsPlayer);
@@ -98,6 +97,7 @@ void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed, bool
 				UE_LOG(LogTemp, Warning, TEXT("Problem- no turret found"));
 
 			}
+
 
 		}
 
@@ -124,11 +124,10 @@ void UTankAimingComponent::MoveBarrel(FVector AimDirection, bool IsPlayer)
 
 	auto BarrelRotator = TankBarrel->GetForwardVector().Rotation();
 	auto TurretRotator = TankTurret->GetForwardVector().Rotation();
-	//TurretRotator = FRotator(BarrelRotator.Pitch, (BarrelRotator.Yaw - 0), BarrelRotator.Roll);
-	//BarrelRotator = FRotator((BarrelRotator.Pitch), BarrelRotator.Yaw, BarrelRotator.Roll);
+
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
-	//auto DeltaRotator2 = FRotator(AimAsRotator.Pitch, AimAsRotator.Yaw, AimAsRotator.Roll) - TurretRotator;
+
 	auto DeltaRotator2 = AimAsRotator - TurretRotator;
 
 	FString myName = GetOwner()->GetName();
@@ -149,6 +148,5 @@ void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 {
 
 	TankTurret = TurretToSet;
-	TankTurret->yawCompensation = TankBarrel->GetForwardVector().Rotation().Yaw;
 
 }

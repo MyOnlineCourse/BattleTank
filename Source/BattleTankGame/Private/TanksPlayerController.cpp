@@ -50,7 +50,7 @@ bool ATanksPlayerController::GetSightRayHitLocation(FVector &OutHitLocation) con
 		
 			//if it hits something, modify needed to reflect the end location and return true
 			//otherwise break and return false
-				
+			
 			GetControlledTank()->AimAt(HitLocation, true);
 
 		}
