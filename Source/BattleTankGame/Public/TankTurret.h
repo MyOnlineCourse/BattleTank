@@ -16,7 +16,9 @@ class BATTLETANKGAME_API UTankTurret : public UStaticMeshComponent
 	
 public:
 
-	void Rotate(float, FRotator, FRotator);
+	void Rotate(float, FRotator, FRotator, bool);
+
+	float yawCompensation = 0.0;
 
 private:
 

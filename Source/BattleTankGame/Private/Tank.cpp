@@ -70,22 +70,43 @@ void ATank::Fire()
 	if (!Barrel) { return; }
 
 	else{  
-	
-		//spawn the projectile	
-		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+		
+		if (IsLoaded()) {
+		
+			//spawn the projectile	
+			auto Projectile = GetWorld()->SpawnActor<AProjectile>(
 			
-			ProjectileBluePrint,
-			Barrel->GetSocketLocation(FName("Projectile")),
-			Barrel->GetSocketRotation(FName("Projectile")),
-			FActorSpawnParameters());
+				ProjectileBluePrint,
+				Barrel->GetSocketLocation(FName("Projectile")),
+				Barrel->GetSocketRotation(FName("Projectile")),
+				FActorSpawnParameters());
 
-		if (Projectile)
-		{
+			if (Projectile)
+			{
 
-			Projectile->LaunchProjectile(LaunchSpeed);
+				Projectile->LaunchProjectile(LaunchSpeed);
+				LastFireTime = FPlatformTime::Seconds();
+
+			}
 
 		}
 
 	}
+
+}
+
+bool ATank::IsLoaded() {
+
+	bool val = (FPlatformTime::Seconds() - LastFireTime) > ReloadSpeed;
+
+	if (val) {
+
+		UE_LOG(LogTemp, Warning, TEXT("Cannon ready!"));
+		
+	}
+
+	else { UE_LOG(LogTemp, Warning, TEXT("Cannon reloading!")); }
+
+	return val;
 
 }

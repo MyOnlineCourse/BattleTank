@@ -37,5 +37,5 @@ private:
 	UTankBarrel* TankBarrel = nullptr;
 
 	UTankTurret* TankTurret = nullptr;
-
+	
 };

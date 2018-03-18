@@ -5,7 +5,7 @@
 
 
 
-void UTankTurret::Rotate(float delta, FRotator CurrentRotation, FRotator DesiredRotation)
+void UTankTurret::Rotate(float delta, FRotator CurrentRotation, FRotator DesiredRotation, bool IsPlayer)
 {
 
 	float MovementChange = FMath::Clamp(delta, -5.f, 5.f) * MaxDegreesPerSecond * GetWorld()->DeltaTimeSeconds;
@@ -13,7 +13,15 @@ void UTankTurret::Rotate(float delta, FRotator CurrentRotation, FRotator Desired
 	
 	FRotator NewRotation = FRotator(0.0, RawNewRotation, 0.0);
 
-	SetRelativeRotation(FRotator(0.0, DesiredRotation.Yaw - 180, 0.0));
+	if (IsPlayer){ SetRelativeRotation(FRotator(0.0, DesiredRotation.Yaw - 180, 0.0));	}
+
+	else{ 
+		
+		//UE_LOG(LogTemp, Warning, TEXT("Desired yaw: %f Current yaw: %f"), DesiredRotation.Yaw, CurrentRotation.Yaw);
+
+		SetRelativeRotation(FRotator(0.0, DesiredRotation.Yaw + yawCompensation, 0.0));  
+	
+	}
 
 	/*
 	if (CurrentRotation.Yaw != DesiredRotation.Yaw)
