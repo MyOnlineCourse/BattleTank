@@ -44,6 +44,8 @@ public:
 	bool IsLoaded();
 
 protected:
+	
+	UPROPERTY(BlueprintReadOnly)
 	UTankAimingComponent* TankAimingComponent = nullptr;
 	
 	UPROPERTY(BlueprintReadOnly)
