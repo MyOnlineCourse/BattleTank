@@ -18,6 +18,8 @@ private:
 		
 	ATank* PlayersTank = nullptr;
 	ATank* PosessedTank = nullptr;
+
+	float AcceptanceRadius = 3000;
 	
 public:
 	
